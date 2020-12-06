@@ -11,13 +11,13 @@ export class TweetService {
   constructor(private readonly httpClient: HttpClient) {}
 
   getStatsForUser(userId: string): Observable<StatModel> {
-    const apiUrl = `http://localhost:3000/api/tweets/${userId}/stats`;
+    const apiUrl = `https://join-assembly-server.azurewebsites.net/api/tweets/${userId}/stats`;
 
     return this.httpClient.get<StatModel>(apiUrl);
   }
 
   getTweetsByTag(tag: string): Observable<TweetModel[]> {
-    const apiUrl = `http://localhost:3000/api/tweets/search?q=${tag}`;
+    const apiUrl = `https://join-assembly-server.azurewebsites.net/api/tweets/search?q=${tag}`;
 
     return this.httpClient.get<TweetModel[]>(apiUrl);
   }

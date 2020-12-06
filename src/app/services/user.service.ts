@@ -10,7 +10,7 @@ export class UserService {
   constructor(private readonly httpClient: HttpClient) {}
 
   getUserDetails(userId: string): Observable<UserModel> {
-    const apiUrl = `http://localhost:3000/api/users/${userId}`;
+    const apiUrl = `https://join-assembly-server.azurewebsites.net/api/users/${userId}`;
 
     return this.httpClient.get<UserModel>(apiUrl);
   }
