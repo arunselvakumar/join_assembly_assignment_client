@@ -1,0 +1,189 @@
+<main>
+  <!-- Welcome Section -->
+  <section class="header-container">
+    <span class="text-muted">Welcome to Top Tweets Dashboard, </span>
+    <span class="text-info" *ngIf="user.id">{{ user.displayName }}!</span>
+    <span class="text-info" *ngIf="!user.id"> Sign In to continue</span>
+  </section>
+
+  <section class="loader" *ngIf="isStatusLoading">
+    <section class="bar"></section>
+    <section class="bar"></section>
+    <section class="bar"></section>
+  </section>
+
+  <!-- Sign In With Twitter Button -->
+  <section class="twitter-sign-in-wrapper" *ngIf="!user.id && !isStatusLoading">
+    <section class="twitter-sign-in-container">
+      <button
+        mat-raised-button
+        class="btn btn-info"
+        (click)="onSignInWithTwitterButtonClicked()"
+      >
+        Sign In with Twitter
+      </button>
+    </section>
+  </section>
+
+  <!-- Dashboard -->
+  <section class="dashboard-container" *ngIf="user.id && !isStatusLoading">
+    <!-- Tweets With Links -->
+    <div class="card card-stats">
+      <div class="card-header card-header-warning card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">link</i>
+        </div>
+        <p class="card-category">Tweets With Links</p>
+        <h3 class="card-title" *ngIf="tweetStat">
+          {{ tweetStat.totalTweetsWithUrls }}
+        </h3>
+      </div>
+      <div class="card-footer">
+        <div class="stats">
+          <i class="material-icons">date_range</i> Updated Recently
+        </div>
+      </div>
+    </div>
+
+    <!-- User With More Links -->
+    <div class="card card-stats">
+      <div class="card-header card-header-success card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">language</i>
+        </div>
+        <p class="card-category">Top Domains</p>
+        <h3 class="card-title">{{ domainList[0]?.key }}</h3>
+      </div>
+      <div class="card-footer">
+        <div class="stats">
+          <i class="material-icons">date_range</i> Updated Recently
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-stats">
+      <div class="card-header card-header-info card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">contacts</i>
+        </div>
+        <p class="card-category">User With Most Links</p>
+        <h3 class="card-title">{{ userLinks[0]?.key }}</h3>
+      </div>
+      <div class="card-footer">
+        <div class="stats">
+          <i class="material-icons">date_range</i> Updated Recently
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hash Tags Search -->
+  <section class="search-container" *ngIf='user.id && !isStatusLoading'>
+    <form class="navbar-form">
+      <div class="input-group no-border">
+        <input
+          type="text"
+          value=""
+          class="form-control"
+          placeholder="Search Hashtags"
+          #inputElement
+          (keydown.enter)="
+            onSearchClicked(inputElement.value); $event.preventDefault()
+          "
+        />
+        <button
+          mat-raised-button
+          type="submit"
+          class="btn btn-white btn-round btn-just-icon"
+          (click)="onSearchClicked(inputElement.value); $event.preventDefault()"
+        >
+          <i class="material-icons">search</i>
+          <div class="ripple-container"></div>
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Data Table -->
+  <section *ngIf="user.id && !isTweetPageView && !isStatusLoading" class="details-container">
+    <!-- Top Domains -->
+    <div class="card">
+      <div class="card-header card-header-primary">
+        <h4 class="card-title">Top Domains</h4>
+      </div>
+      <div class="card-body table-responsive">
+        <table class="table table-hover">
+          <thead class="text-warning">
+            <th>Domain</th>
+            <th>Count</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of domainList">
+              <td>{{ user.key }}</td>
+              <td>{{ user.value }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- User With Links -->
+    <div class="card">
+      <div class="card-header card-header-rose">
+        <h4 class="card-title">User With Most Links</h4>
+      </div>
+      <div class="card-body table-responsive">
+        <table class="table table-hover">
+          <thead class="text-warning">
+            <th>User</th>
+            <th>Number Of Links Shared</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of userLinks">
+              <td>{{ user.key }}</td>
+              <td>{{ user.value }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tweets Page -->
+  <section *ngIf="isTweetPageView && !isStatusLoading">
+    <section class="loader" *ngIf="isTweetsLoading">
+      <section class="bar"></section>
+      <section class="bar"></section>
+      <section class="bar"></section>
+    </section>
+
+    <section *ngIf="!isTweetsLoading">
+      <section *ngIf="!tweets.length" class='no-tweets-label'>No Tweets Available</section>
+      <section *ngIf="tweets.length > 0">
+        <div class="card">
+          <div class="card-header card-header-tabs card-header-primary">
+            <div class="nav-tabs-navigation">Search Results</div>
+          </div>
+          <div class="card-body">
+            <div class="tab-content">
+              <div class="tab-pane active" id="profile">
+                <table class="table">
+                  <tbody>
+                    <tr *ngFor='let tweet of tweets'>
+                      <td>
+                        <div class="card-icon text-success">
+                          <i class="material-icons">contacts</i>
+                        </div>
+                      </td>
+                      <td> {{ tweet.text }} </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </section>
+</main>
