@@ -98,7 +98,7 @@ export class LauncherComponent implements OnInit {
   }
 
   public onSignInWithTwitterButtonClicked(): void {
-    this.document.location.href = "http://localhost:3000/auth";
+    this.document.location.href = "https://join-assembly-server.azurewebsites.net/auth";
   }
 
   public async onSearchClicked(value: string): Promise<void> {
