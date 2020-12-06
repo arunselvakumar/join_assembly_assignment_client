@@ -25,6 +25,14 @@
     </section>
   </section>
 
+  <section *ngIf="user.id && !isStatusLoading && tweetStat.totalTweets === 0">
+    <div class="card card-stats">
+      <div class="card-header card-header-danger">
+        Your Tweets are being fetched in background in server, Kindly refresh the page.
+      </div>
+     </div>
+  </section>
+
   <!-- Dashboard -->
   <section class="dashboard-container" *ngIf="user.id && !isStatusLoading">
     <!-- Tweets With Links -->
