@@ -33,9 +33,7 @@ main {
   }
 
   .dashboard-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 20px;
+
 
     .card {
       cursor: pointer;
@@ -44,12 +42,6 @@ main {
         font-size: 28px;
       }
     }
-  }
-
-  .details-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 20px;
   }
 
   .search-container {
@@ -103,5 +95,19 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .dashboard-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+  }
+
+  .details-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
   }
 }
